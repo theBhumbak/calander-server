@@ -3,7 +3,9 @@ const { findTasksByFilter } = require("../services/taskService");
 const { Op } = require("sequelize");
 
 const cronIntialise = (io) => {
+  console.log("for io im here");
   io.on("connection", (socket) => {
+    console.log("for io User Connected");
     console.log(`User Connected: ${socket.id}`);
 
     cron.schedule("*/2 * * * * *", async () => {

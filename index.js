@@ -27,9 +27,9 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-
+console.log("for io cronIntialise");
 cronIntialise(io);
 
 server.listen(3000, () => {
-  console.log("SERVER IS RUNNING");
+  console.log("SERVER IS RUNNING 3000 index for io ");
 });
