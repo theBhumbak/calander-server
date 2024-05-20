@@ -1,0 +1,38 @@
+const cron = require("node-cron");
+const { findTasksByFilter } = require("../services/taskService");
+const { Op } = require("sequelize");
+
+const cronIntialise = (io) => {
+  io.on("connection", (socket) => {
+    console.log(`User Connected: ${socket.id}`);
+
+    cron.schedule("*/2 * * * * *", async () => {
+      // Your task logic here
+      const mins = new Date().getMinutes();
+      const startRange = new Date().setMinutes(mins + 1);
+      const endRange = new Date().setMinutes(mins + 2);
+      const filter = {
+        where: {
+          startDate: {
+            [Op.gte]: startRange,
+            [Op.lt]: endRange,
+          },
+        },
+      };
+      try {
+        const tasks = await findTasksByFilter(filter);
+        socket.emit("receive_message", tasks);
+      } catch (error) {
+        console.log(">>>>> cron error", error);
+      }
+    });
+    socket.on("join_room", (data) => {
+      socket.join(data);
+    });
+    socket.on("send_message", (data) => {
+      socket.broadcast.emit("receive_message", data);
+    });
+  });
+};
+
+module.exports = cronIntialise;
