@@ -9,7 +9,14 @@ const cronIntialise = require("./src/cron");
 app.use(express.json());
 
 const server = http.createServer(app);
-
+sequelize
+  .sync({ force: true })
+  .then(() => {
+    console.log("Database synced");
+  })
+  .catch((err) => {
+    console.error("Error syncing database:", err);
+  });
 app.use("/tasks", tasksRouter);
 
 const io = new Server(server, {
