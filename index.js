@@ -7,8 +7,8 @@ const sequelize = require("./src/config/database");
 const cors = require("cors");
 const cronIntialise = require("./src/cron");
 
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 
 const server = http.createServer(app);
 sequelize
