@@ -4,9 +4,11 @@ const http = require("http");
 const { Server } = require("socket.io");
 const tasksRouter = require("./src/routes/tasks");
 const sequelize = require("./src/config/database");
+const cors = require("cors");
 const cronIntialise = require("./src/cron");
 
 app.use(express.json());
+app.use(cors());
 
 const server = http.createServer(app);
 sequelize
