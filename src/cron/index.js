@@ -8,16 +8,14 @@ const cronIntialise = (io) => {
     console.log("for io User Connected");
     console.log(`User Connected: ${socket.id}`);
 
-    cron.schedule("*/10 * * * * *", async () => {
+    cron.schedule("*/30 * * * * *", async () => {
       // Your task logic here
       const mins = new Date().getMinutes();
       const startRange = new Date().setMinutes(mins + 1);
-      const endRange = new Date().setMinutes(mins + 60);
       const filter = {
         where: {
           startDate: {
             [Op.gte]: startRange,
-            [Op.lt]: endRange,
           },
         },
       };
